@@ -47,14 +47,14 @@ func main() {
 	}
 
 	spell_checker := checker.CheckSpelling(local_dict, scanner_doc)
-	spell_suggestions := checker.GetSuggestions()
+	spell_suggestions := checker.GetSuggestions(local_dict)
 
 	fmt.Println("Mispellings...")
 	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 	for i, word := range spell_checker {
 		fmt.Println(strconv.Itoa(i+1) + ": " + word)
+		fmt.Println(spell_suggestions[i])
+		fmt.Println()
 	}
-
-	fmt.Println(spell_suggestions)
 
 }

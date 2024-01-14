@@ -4,9 +4,12 @@ import (
 	"bufio"
 	"strconv"
 	"strings"
+
+	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
 var incorrect_words = []string{}
+var doc_suggestions [][]string
 
 func CheckSpelling(dict []string, doc *bufio.Scanner) []string {
 	incorrect_details := []string{}
@@ -54,6 +57,19 @@ func getColumnNumber(line []string, word_index int) int {
 	return col_number
 }
 
-func GetSuggestions() []string {
-	return incorrect_words
+func GetSuggestions(dict []string) [][]string {
+	suggestions := []string{}
+
+	for _, word := range incorrect_words {
+		for _, dict_word := range dict {
+			distance := levenshtein.DistanceForStrings([]rune(word), []rune(dict_word), levenshtein.DefaultOptions)
+			if distance <= 3 {
+				suggestions = append(suggestions, dict_word)
+			}
+		}
+		doc_suggestions = append(doc_suggestions, suggestions)
+		suggestions = []string{}
+	}
+
+	return doc_suggestions
 }
