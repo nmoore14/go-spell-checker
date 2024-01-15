@@ -7,6 +7,7 @@ import (
 	"nick_moore/spell-checker/checker"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -43,7 +44,11 @@ func main() {
 	scanner_doc := bufio.NewScanner(document)
 
 	for scanner_dict.Scan() {
-		local_dict = append(local_dict, scanner_dict.Text())
+		line := strings.TrimSpace(scanner_dict.Text())
+		dict_line := strings.Split(line, " ")
+		for _, dict_word := range dict_line {
+			local_dict = append(local_dict, strings.TrimSpace(dict_word))
+		}
 	}
 
 	spell_checker := checker.CheckSpelling(local_dict, scanner_doc)
@@ -53,6 +58,7 @@ func main() {
 	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 	for i, word := range spell_checker {
 		fmt.Println(strconv.Itoa(i+1) + ": " + word)
+		fmt.Println("--- SUGGESTIONS ---")
 		fmt.Println(spell_suggestions[i])
 		fmt.Println()
 	}
