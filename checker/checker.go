@@ -10,6 +10,7 @@ import (
 
 var incorrect_words = []string{}
 var doc_suggestions [][]string
+var doc_contexts [][]string
 
 func CheckSpelling(dict []string, doc *bufio.Scanner) []string {
 	incorrect_details := []string{}
@@ -25,6 +26,7 @@ func CheckSpelling(dict []string, doc *bufio.Scanner) []string {
 				incorrect := word + " (" + strconv.Itoa(line_num) + ":" + strconv.Itoa(getColumnNumber(doc_line, i)) + ")"
 				incorrect_words = append(incorrect_words, word)
 				incorrect_details = append(incorrect_details, incorrect)
+				doc_contexts = append(doc_contexts, BuildContextString(doc_line, word, i))
 			}
 		}
 	}
@@ -57,6 +59,12 @@ func getColumnNumber(line []string, word_index int) int {
 	return col_number
 }
 
+func BuildContextString(line []string, word string, word_index int) []string {
+	line[word_index] = " [" + word + "] "
+
+	return line
+}
+
 func GetSuggestions(dict []string) [][]string {
 	suggestions := []string{}
 
@@ -72,4 +80,8 @@ func GetSuggestions(dict []string) [][]string {
 	}
 
 	return doc_suggestions
+}
+
+func GetDocContexts() [][]string {
+	return doc_contexts
 }

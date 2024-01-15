@@ -34,9 +34,10 @@
 - [x] Check the spelling for errors
     - [x] Build a list of mispelled words with row and column number
     - [x] Return the list
-- [ ] Check the incorrect list for word suggestions
-    - [ ] Loop through the incorrect list and build another list for suggestions using the below algorithm.
+- [x] Check the incorrect list for word suggestions
+    - [x] Loop through the incorrect list and build another list for suggestions using the below algorithm.
 - [x] Handle proper nouns correctly.
+- [x] Print some surrounding context to help the user pick a suggestion.
 
 ### Research
 - (Levenshtein Distance)[https://en.wikipedia.org/wiki/Levenshtein_distance#:~:text=Informally%2C%20the%20Levenshtein%20distance%20between,considered%20this%20distance%20in%201965]
